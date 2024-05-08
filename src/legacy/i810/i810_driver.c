@@ -155,7 +155,7 @@ I810GetRec(ScrnInfoPtr scrn)
    if (((uintptr_t)scrn->driverPrivate & 3) == 0)
       return TRUE;
 
-   scrn->driverPrivate = xnfcalloc(sizeof(I810Rec), 1);
+   scrn->driverPrivate = XNFcallocarray(sizeof(I810Rec), 1);
    return TRUE;
 }
 
@@ -503,7 +503,7 @@ I810PreInit(ScrnInfoPtr scrn, int flags)
 	 pI810->MaxClock = 86000;
       }
    }
-   clockRanges = xnfcalloc(sizeof(ClockRange), 1);
+   clockRanges = XNFcallocarray(sizeof(ClockRange), 1);
    clockRanges->next = NULL;
    /* 9.4MHz appears to be the smallest that works. */
    clockRanges->minClock = 9500;

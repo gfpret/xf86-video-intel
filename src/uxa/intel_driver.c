@@ -460,7 +460,7 @@ static Bool I830PreInit(ScrnInfoPtr scrn, int flags)
 		return TRUE;
 
 	if (((uintptr_t)scrn->driverPrivate) & 3) {
-		intel = xnfcalloc(sizeof(*intel), 1);
+		intel = XNFcallocarray(sizeof(*intel), 1);
 		if (intel == NULL)
 			return FALSE;
 

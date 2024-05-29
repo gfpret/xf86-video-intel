@@ -5,7 +5,7 @@ project('xf86-video-intel', 'c',
 	  'c_std=gnu99',
 	],
 	license : 'MIT',
-	meson_version : '>0.40.0')
+	meson_version : '>=0.50.0')
 
 config = configuration_data()
 

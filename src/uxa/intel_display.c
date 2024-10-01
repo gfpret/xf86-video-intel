@@ -563,7 +563,7 @@ intel_create_pixmap_header(ScreenPtr pScreen, int width, int height, int depth,
                 {
                         return pixmap;
                 }
-                (*pScreen->DestroyPixmap) (pixmap);
+                dixDestroyPixmap(pixmap, 0);
         }
         return NullPixmap;
 }
@@ -620,7 +620,7 @@ intel_crtc_shadow_destroy(xf86CrtcPtr crtc, PixmapPtr rotate_pixmap, void *data)
 
 	if (rotate_pixmap) {
                 intel_set_pixmap_bo(rotate_pixmap, NULL);
-                rotate_pixmap->drawable.pScreen->DestroyPixmap(rotate_pixmap);
+                dixDestroyPixmap(rotate_pixmap, 0);
 	}
 
 	if (data) {
@@ -2408,7 +2408,7 @@ intel_create_pixmap_for_bo(ScreenPtr pScreen, dri_bo *bo,
 					 width, height,
 					 depth, bpp,
 					 pitch, NULL)) {
-		pScreen->DestroyPixmap(pixmap);
+		dixDestroyPixmap(pixmap, 0);
 		return NullPixmap;
 	}
 
@@ -2515,9 +2515,9 @@ void intel_copy_fb(ScrnInfoPtr scrn)
 #endif
 
 cleanup_dst:
-	(*pScreen->DestroyPixmap)(dst);
+	dixDestroyPixmap(dst, 0);
 cleanup_src:
-	(*pScreen->DestroyPixmap)(src);
+	dixDestroyPixmap(src, 0);
 }
 
 void

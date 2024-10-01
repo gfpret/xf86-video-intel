@@ -210,7 +210,7 @@ I830DRI2CreateBuffers(DrawablePtr drawable, unsigned int *attachments,
 			    intel_get_pixmap_bo(pixmap) == NULL)
 			{
 				if (pixmap)
-					screen->DestroyPixmap(pixmap);
+					dixDestroyPixmap(pixmap, 0);
 				goto unwind;
 			}
 		}
@@ -228,7 +228,7 @@ I830DRI2CreateBuffers(DrawablePtr drawable, unsigned int *attachments,
 
 		if ((buffers[i].name = pixmap_flink(pixmap)) == 0) {
 			/* failed to name buffer */
-			screen->DestroyPixmap(pixmap);
+			dixDestroyPixmap(pixmap, 0);
 			goto unwind;
 		}
 	}
@@ -237,7 +237,7 @@ I830DRI2CreateBuffers(DrawablePtr drawable, unsigned int *attachments,
 
 unwind:
 	while (i--)
-		screen->DestroyPixmap(privates[i].pixmap);
+		dixDestroyPixmap(privates[i].pixmap, 0);
 	free(privates);
 	free(buffers);
 	return NULL;
@@ -252,7 +252,7 @@ I830DRI2DestroyBuffers(DrawablePtr drawable, DRI2BufferPtr buffers, int count)
 
 	for (i = 0; i < count; i++) {
 		private = buffers[i].driverPrivate;
-		screen->DestroyPixmap(private->pixmap);
+		dixDestroyPixmap(private->pixmap, 0);
 	}
 
 	if (buffers) {
@@ -353,7 +353,7 @@ I830DRI2CreateBuffer(DrawablePtr drawable, unsigned int attachment,
 					      hint);
 		if (pixmap == NULL || intel_get_pixmap_bo(pixmap) == NULL) {
 			if (pixmap)
-				screen->DestroyPixmap(pixmap);
+				dixDestroyPixmap(pixmap, 0);
 			free(privates);
 			free(buffer);
 			return NULL;
@@ -371,7 +371,7 @@ I830DRI2CreateBuffer(DrawablePtr drawable, unsigned int attachment,
 
 	if ((buffer->name = pixmap_flink(pixmap)) == 0) {
 		/* failed to name buffer */
-		screen->DestroyPixmap(pixmap);
+		dixDestroyPixmap(pixmap, 0);
 		free(privates);
 		free(buffer);
 		return NULL;
@@ -386,7 +386,7 @@ static void I830DRI2DestroyBuffer(DrawablePtr drawable, DRI2Buffer2Ptr buffer)
 		I830DRI2BufferPrivatePtr private = buffer->driverPrivate;
 		if (--private->refcnt == 0) {
 			ScreenPtr screen = private->pixmap->drawable.pScreen;
-			screen->DestroyPixmap(private->pixmap);
+			dixDestroyPixmap(private->pixmap, 0);
 
 			free(private);
 			free(buffer);

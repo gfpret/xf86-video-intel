@@ -6046,7 +6046,7 @@ sna_mode_resize(ScrnInfoPtr scrn, int width, int height)
 	screen->SetScreenPixmap(new_front);
 	assert(screen->GetScreenPixmap(screen) == new_front);
 	assert(sna->front == new_front);
-	screen->DestroyPixmap(new_front); /* owned by screen now */
+	dixDestroyPixmap(new_front, 0); /* owned by screen now */
 
 	scrn->virtualX = width;
 	scrn->virtualY = height;
@@ -8918,7 +8918,7 @@ sna_crtc_redisplay__fallback(xf86CrtcPtr crtc, RegionPtr region, struct kgem_bo 
 free_src:
 	FreePicture(src, None);
 free_pixmap:
-	screen->DestroyPixmap(pixmap);
+	dixDestroyPixmap(pixmap, 0);
 }
 
 static void
@@ -9028,7 +9028,7 @@ sna_crtc_redisplay__composite(xf86CrtcPtr crtc, RegionPtr region, struct kgem_bo
 free_src:
 	FreePicture(src, None);
 free_pixmap:
-	screen->DestroyPixmap(pixmap);
+	dixDestroyPixmap(pixmap, 0);
 }
 
 static void

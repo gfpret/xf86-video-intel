@@ -260,7 +260,7 @@ bool sna_glyphs_create(struct sna *sna)
 						serverClient, &error);
 		}
 
-		screen->DestroyPixmap(pixmap);
+		dixDestroyPixmap(pixmap, 0);
 		if (!picture)
 			goto bail;
 

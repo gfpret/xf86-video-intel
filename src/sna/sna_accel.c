@@ -51,6 +51,7 @@
 #include <shmint.h>
 
 #include <X11/extensions/damageproto.h>
+#include <X11/fonts/libxfont2.h>
 
 #include <sys/time.h>
 #include <sys/mman.h>
@@ -118,12 +119,6 @@
 #define IS_CLIPPED	0x2
 #define RECTILINEAR	0x4
 #define OVERWRITES	0x8
-
-#if XFONT2_CLIENT_FUNCS_VERSION >= 1
-#define AllocateFontPrivateIndex() xfont2_allocate_font_private_index()
-#undef FontSetPrivate
-#define FontSetPrivate(font, idx, data) xfont2_font_set_private(font, idx, data)
-#endif
 
 #if 0
 static void __sna_fallback_flush(DrawablePtr d)
@@ -15393,7 +15388,7 @@ sna_realize_font(ScreenPtr screen, FontPtr font)
 	if (priv == NULL)
 		return FALSE;
 
-	if (!FontSetPrivate(font, sna_font_key, priv)) {
+	if (!xfont2_font_set_private(font, sna_font_key, priv)) {
 		free(priv);
 		return FALSE;
 	}
@@ -15428,7 +15423,7 @@ sna_unrealize_font(ScreenPtr screen, FontPtr font)
 	}
 	free(priv);
 
-	FontSetPrivate(font, sna_font_key, NULL);
+	xfont2_font_set_private(font, sna_font_key, NULL);
 	return TRUE;
 }
 
@@ -18165,7 +18160,7 @@ bool sna_accel_init(ScreenPtr screen, struct sna *sna)
 
 	DBG(("%s\n", __FUNCTION__));
 
-	sna_font_key = AllocateFontPrivateIndex();
+	sna_font_key = xfont2_allocate_font_private_index();
 
 	list_init(&sna->flush_pixmaps);
 	list_init(&sna->active_pixmaps);

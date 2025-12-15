@@ -22,10 +22,10 @@
 
 # Initialize Autoconf
 AC_PREREQ([2.60])
-AC_INIT([xf86-video-intel],
+AC_INIT([xlibre-xf86-video-intel],
         [2.99.917],
-        [https://gitlab.freedesktop.org/xorg/driver/xf86-video-intel/issues/new],
-        [xf86-video-intel])
+        [https://github.com/X11Libre/xf86-video-sis/issues],
+        [xlibre-xf86-video-intel])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])

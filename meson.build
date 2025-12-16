@@ -62,9 +62,6 @@ endif
 
 with_tools = get_option('tools')
 
-config.set('USE_GIT_DESCRIBE', 1)
-config.set('BUILDER_DESCRIPTION', 1)
-
 atomic_primitives = 'none'
 
 atomic_primitives_code = '''

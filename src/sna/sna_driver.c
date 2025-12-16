@@ -74,12 +74,6 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <memcheck.h>
 #endif
 
-#if HAVE_DOT_GIT
-#include "git_version.h"
-#else
-#define git_version "not compiled from git"
-#endif
-
 #ifdef TEARFREE
 #define ENABLE_TEAR_FREE TRUE
 #else
@@ -1399,13 +1393,6 @@ static void describe_kms(ScrnInfoPtr scrn)
 
 static void describe_sna(ScrnInfoPtr scrn)
 {
-#if defined(USE_GIT_DESCRIBE)
-	xf86DrvMsg(scrn->scrnIndex, X_INFO,
-		   "SNA compiled from %s\n", git_version);
-#elif defined(BUILDER_DESCRIPTION)
-	xf86DrvMsg(scrn->scrnIndex, X_INFO,
-		   "SNA compiled: %s\n", BUILDER_DESCRIPTION);
-#endif
 #if HAS_DEBUG_FULL
 	ErrorF("SNA compiled with full debug logging; expect to run slowly\n");
 #endif
@@ -1430,7 +1417,6 @@ static void describe_sna(ScrnInfoPtr scrn)
 		   "SNA compiled for use with valgrind\n");
 	VALGRIND_PRINTF("SNA compiled for use with valgrind\n");
 #endif
-	DBG(("xf86-video-intel version: %s\n", git_version));
 	DBG(("pixman version: %s\n", pixman_version_string()));
 }
 

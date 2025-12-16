@@ -91,33 +91,6 @@ if test "x$backlight_helper" = "xyes"; then
 	AC_DEFINE(USE_BACKLIGHT_HELPER, 1, [Enable use of the backlight helper interfaces])
 fi
 
-# Are we in a git checkout?
-dot_git=no
-if test -e .git; then
-	AC_DEFINE(HAVE_DOT_GIT, 1, [Are we in a git checkout?])
-	dot_git=yes
-fi
-AM_CONDITIONAL(HAVE_DOT_GIT, test "x$dot_git" = "xyes")
-
-# If so, we include the git description in our logs for sanity checking.
-#
-# However, for people not running their own drivers this is just noise.
-# So we copy the xserver's builderstring idiom to allow for this to be
-# overridden and perhaps replaced with something more useful.
-AC_ARG_WITH(builderstring,
-	    AS_HELP_STRING([--with-builderstring=BUILDERSTRING],
-			   [Additional builder string (default: use git describe)]),
-	    [BUILDERSTRING="$withval"],
-	    [BUILDERSTRING="x-magic-git-describe"])
-
-if test "x$BUILDERSTRING" = "xx-magic-git-describe" -a "x$dot_git" = "xyes"; then
-	AC_DEFINE(USE_GIT_DESCRIBE, 1, [Use automagic builder description])
-else
-  if test "x$BUILDERSTRING" != x -a "x$BUILDERSTRING" != "xno" -a "x$BUILDERSTRING" != xx-magic-git-describe; then
-	  AC_DEFINE_UNQUOTED(BUILDER_DESCRIPTION, ["$BUILDERSTRING"], [Builder description])
-  fi
-fi
-
 AC_ARG_ENABLE(gen4asm,
               AS_HELP_STRING([--enable-gen4asm],
 			     [Enable rebuilding the gen4 assembly files [default=no]]),

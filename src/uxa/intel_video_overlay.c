@@ -44,10 +44,7 @@
 /*
  * XXX Could support more formats.
  */
-
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <inttypes.h>
 #include <math.h>

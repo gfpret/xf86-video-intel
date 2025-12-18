@@ -723,8 +723,6 @@ LIBS=""
 AC_SEARCH_LIBS(clock_gettime, rt, [CLOCK_GETTIME_LIBS=$LIBS])
 AC_SUBST(CLOCK_GETTIME_LIBS)
 
-sdkdir=`$PKG_CONFIG --variable=sdkdir xorg-server`
-
 AM_CONDITIONAL(DEBUG, test "x$DEBUG" != "xno")
 AM_CONDITIONAL(FULL_DEBUG, test "x$DEBUG" = "xfull")
 if test "x$DEBUG" = "xno"; then

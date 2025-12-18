@@ -828,8 +828,6 @@ err:
 }
 #endif
 
-#ifdef XFree86LOADER
-
 static MODULESETUPPROTO(intel_setup);
 
 static XF86ModuleVersionInfo intel_version = {
@@ -904,4 +902,3 @@ static pointer intel_setup(pointer module,
 }
 
 _X_EXPORT XF86ModuleData intelModuleData = { &intel_version, intel_setup, NULL };
-#endif

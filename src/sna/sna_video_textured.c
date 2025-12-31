@@ -82,7 +82,7 @@ static const XvImageRec gen9_Images[] = {
 	XVMC_YUV,
 };
 
-static int sna_video_textured_stop(ddStopVideo_ARGS)
+static int sna_video_textured_stop(XvPortPtr port, DrawablePtr draw)
 {
 	struct sna_video *video = port->devPriv.ptr;
 

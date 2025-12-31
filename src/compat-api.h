@@ -78,8 +78,6 @@ region_get_boxes(const RegionRec *r, const BoxRec **s, const BoxRec **e)
 #define RegionBoxptr REGION_BOXPTR
 #define RegionEnd REGION_END
 #define RegionExtents(r) REGION_EXTENTS(NULL, r)
-#define RegionRects REGION_RECTS
-#define RegionNumRects REGION_NUM_RECTS
 #define RegionContainsRect(r, b) RECT_IN_REGION(NULL, r, b)
 #define RegionContainsPoint(r, x, y, b) POINT_IN_REGION(NULL, r, x, y, b)
 #define RegionCopy(res, r) REGION_COPY(NULL, res, r)
@@ -88,15 +86,11 @@ region_get_boxes(const RegionRec *r, const BoxRec **s, const BoxRec **e)
 #define RegionSubtract(res, r1, r2) REGION_SUBTRACT(NULL, res, r1, r2)
 #define RegionTranslate(r, x, y) REGION_TRANSLATE(NULL, r, x, y)
 #define RegionUninit(r) REGION_UNINIT(NULL, r)
-#define region_from_bitmap BITMAP_TO_REGION
 #define RegionNil REGION_NIL
 #define RegionNull(r) REGION_NULL(NULL, r)
 #define RegionNotEmpty(r) REGION_NOTEMPTY(NULL, r)
 #define RegionEmpty(r) REGION_EMPTY(NULL, r)
 #define RegionEqual(a, b) REGION_EQUAL(NULL, a, b)
-#define RegionDestroy(r) REGION_DESTROY(NULL, r)
-#else
-#define region_from_bitmap BitmapToRegion
 #endif
 
 #define __get_private(p, key) dixGetPrivateAddr(&(p)->devPrivates, &(key))

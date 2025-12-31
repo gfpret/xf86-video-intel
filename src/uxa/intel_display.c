@@ -301,7 +301,6 @@ intel_mode_disable_unused_functions(ScrnInfoPtr scrn)
 static Bool
 intel_crtc_apply(xf86CrtcPtr crtc)
 {
-	ScrnInfoPtr scrn = crtc->scrn;
 	struct intel_crtc *intel_crtc = crtc->driver_private;
 	struct intel_mode *mode = intel_crtc->mode;
 	xf86CrtcConfigPtr   xf86_config = XF86_CRTC_CONFIG_PTR(crtc->scrn);

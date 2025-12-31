@@ -9098,7 +9098,6 @@ sna_poly_zero_line_blt(DrawablePtr drawable,
 	struct sna *sna = to_sna_from_pixmap(pixmap);
 	int x2, y2, xstart, ystart, oc2;
 	unsigned int bias = miGetZeroLineBias(drawable->pScreen);
-	bool degenerate = true;
 	struct sna_fill_op fill;
 	RegionRec clip;
 	BoxRec box[512], *b, * const last_box = box + ARRAY_SIZE(box);
@@ -9167,8 +9166,6 @@ sna_poly_zero_line_blt(DrawablePtr drawable,
 			if (x2 == x1 && y2 == y1)
 				continue;
 
-			degenerate = false;
-
 			oc2 = 0;
 			OUTCODES(oc2, x2, y2, extents);
 			if (oc1 & oc2)
@@ -9198,10 +9195,7 @@ sna_poly_zero_line_blt(DrawablePtr drawable,
 				b->x2++;
 				b->y2++;
 				if (oc1 | oc2) {
-					bool intersects;
-
-					intersects = box_intersect(b, extents);
-					assert(intersects);
+					assert(box_intersect(b, extents));
 				}
 				if (++b == last_box) {
 					ret = &&rectangle_continue;

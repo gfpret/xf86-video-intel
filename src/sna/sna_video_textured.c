@@ -95,7 +95,7 @@ static int sna_video_textured_stop(XvPortPtr port, DrawablePtr draw)
 }
 
 static int
-sna_video_textured_set_attribute(ddSetPortAttribute_ARGS)
+sna_video_textured_set_attribute(XvPortPtr port, Atom attribute, INT32 value)
 {
 	struct sna_video *video = port->devPriv.ptr;
 

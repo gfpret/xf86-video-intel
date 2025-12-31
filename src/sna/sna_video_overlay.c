@@ -150,7 +150,7 @@ static int sna_video_overlay_stop(XvPortPtr port, DrawablePtr draw)
 }
 
 static int
-sna_video_overlay_set_attribute(ddSetPortAttribute_ARGS)
+sna_video_overlay_set_attribute(XvPortPtr port, Atom attribute, INT32 value)
 {
 	struct sna_video *video = port->devPriv.ptr;
 	struct sna *sna = video->sna;

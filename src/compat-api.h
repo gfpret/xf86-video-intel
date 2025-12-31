@@ -71,7 +71,6 @@ region_get_boxes(const RegionRec *r, const BoxRec **s, const BoxRec **e)
 	if ((d)->pScreen->SourceValidate) (d)->pScreen->SourceValidate(d, x, y, w, h, mode)
 
 #define XORG_XV_VERSION 2
-#define ddSetPortAttribute_ARGS XvPortPtr port, Atom attribute, INT32 value
 #define ddGetPortAttribute_ARGS XvPortPtr port, Atom attribute, INT32 *value
 #define ddQueryBestSize_ARGS XvPortPtr port, CARD8 motion, CARD16 vid_w, CARD16 vid_h, CARD16 drw_w, CARD16 drw_h, unsigned int *p_w, unsigned int *p_h
 #define ddPutImage_ARGS DrawablePtr draw, XvPortPtr port, GCPtr gc, INT16 src_x, INT16 src_y, CARD16 src_w, CARD16 src_h, INT16 drw_x, INT16 drw_y, CARD16 drw_w, CARD16 drw_h, XvImagePtr format, unsigned char *buf, Bool sync, CARD16 width, CARD16 height

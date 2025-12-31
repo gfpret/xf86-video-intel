@@ -67,13 +67,8 @@ region_get_boxes(const RegionRec *r, const BoxRec **s, const BoxRec **e)
 
 #define __get_private(p, key) dixGetPrivateAddr(&(p)->devPrivates, &(key))
 
-#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(1,9,99,902,0)
 #define SourceValidate(d, x, y, w, h, mode) \
 	if ((d)->pScreen->SourceValidate) (d)->pScreen->SourceValidate(d, x, y, w, h, mode)
-#else
-#define SourceValidate(d, x, y, w, h, mode) \
-	if ((d)->pScreen->SourceValidate) (d)->pScreen->SourceValidate(d, x, y, w, h)
-#endif
 
 #define DamageUnregister(d, dd) DamageUnregister(dd)
 

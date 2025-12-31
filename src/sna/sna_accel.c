@@ -7148,8 +7148,7 @@ sna_do_copy(DrawablePtr src, DrawablePtr dst, GCPtr gc,
 		clip = miHandleExposures(src, dst, gc,
 					 sx - src->x, sy - src->y,
 					 width, height,
-					 dx - dst->x, dy - dst->y,
-					 (unsigned long) bitPlane);
+					 dx - dst->x, dy - dst->y);
 	return clip;
 }
 
@@ -8873,7 +8872,7 @@ empty:
 	return miHandleExposures(src, dst, gc,
 				 src_x, src_y,
 				 w, h,
-				 dst_x, dst_y, bit);
+				 dst_x, dst_y);
 }
 
 static bool

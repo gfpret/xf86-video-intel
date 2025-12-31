@@ -172,7 +172,7 @@ static int sna_video_sprite_set_attr(XvPortPtr port, Atom attribute, INT32 value
 	return Success;
 }
 
-static int sna_video_sprite_get_attr(ddGetPortAttribute_ARGS)
+static int sna_video_sprite_get_attr(XvPortPtr port, Atom attribute, INT32 *value)
 {
 	struct sna_video *video = port->devPriv.ptr;
 

@@ -126,7 +126,7 @@ sna_video_textured_set_attribute(XvPortPtr port, Atom attribute, INT32 value)
 }
 
 static int
-sna_video_textured_get_attribute(ddGetPortAttribute_ARGS)
+sna_video_textured_get_attribute(XvPortPtr port, Atom attribute, INT32 *value)
 {
 	struct sna_video *video = port->devPriv.ptr;
 

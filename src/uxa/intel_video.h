@@ -144,11 +144,11 @@ extern XF86VideoFormatRec intel_xv_formats[NUM_FORMATS];
 
 #define NUM_ATTRIBUTES 5
 
-extern XF86AttributeRec intel_xv_attributes[NUM_ATTRIBUTES];
+extern XvAttributeRec intel_xv_attributes[NUM_ATTRIBUTES];
 
 #define GAMMA_ATTRIBUTES 6
 
-extern XF86AttributeRec intel_xv_gamma_attributes[GAMMA_ATTRIBUTES];
+extern XvAttributeRec intel_xv_gamma_attributes[GAMMA_ATTRIBUTES];
 
 #ifdef INTEL_XVMC
 #define NUM_IMAGES 5

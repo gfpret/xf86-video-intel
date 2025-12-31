@@ -96,7 +96,7 @@ XF86VideoFormatRec intel_xv_formats[NUM_FORMATS] = {
 	{15, TrueColor}, {16, TrueColor}, {24, TrueColor}
 };
 
-XF86AttributeRec intel_xv_attributes[NUM_ATTRIBUTES] = {
+XvAttributeRec intel_xv_attributes[NUM_ATTRIBUTES] = {
 	{XvSettable | XvGettable, 0, (1 << 24) - 1, "XV_COLORKEY"},
 	{XvSettable | XvGettable, -128, 127, "XV_BRIGHTNESS"},
 	{XvSettable | XvGettable, 0, 255, "XV_CONTRAST"},
@@ -105,7 +105,7 @@ XF86AttributeRec intel_xv_attributes[NUM_ATTRIBUTES] = {
 };
 
 #define GAMMA_ATTRIBUTES 6
-XF86AttributeRec intel_xv_gamma_attributes[GAMMA_ATTRIBUTES] = {
+XvAttributeRec intel_xv_gamma_attributes[GAMMA_ATTRIBUTES] = {
 	{XvSettable | XvGettable, 0, 0xffffff, "XV_GAMMA0"},
 	{XvSettable | XvGettable, 0, 0xffffff, "XV_GAMMA1"},
 	{XvSettable | XvGettable, 0, 0xffffff, "XV_GAMMA2"},

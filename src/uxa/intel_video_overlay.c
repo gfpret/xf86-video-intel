@@ -433,7 +433,7 @@ XF86VideoAdaptorPtr intel_video_overlay_setup_image(ScreenPtr screen)
 	intel_screen_private *intel = intel_get_screen_private(scrn);
 	XF86VideoAdaptorPtr adapt;
 	intel_adaptor_private *adaptor_priv;
-	XF86AttributePtr att;
+	XvAttributePtr att;
 
 	/* Set up overlay video if it is available */
 	intel->use_overlay = intel_has_overlay(intel);
@@ -470,15 +470,15 @@ XF86VideoAdaptorPtr intel_video_overlay_setup_image(ScreenPtr screen)
 	if (INTEL_INFO(intel)->gen >= 030)
 		adapt->nAttributes += GAMMA_ATTRIBUTES;	/* has gamma */
 	adapt->pAttributes =
-	    XNFalloc(sizeof(XF86AttributeRec) * adapt->nAttributes);
+	    XNFalloc(sizeof(XvAttributeRec) * adapt->nAttributes);
 	/* Now copy the attributes */
 	att = adapt->pAttributes;
 	memcpy((char *)att, (char *)intel_xv_attributes,
-	       sizeof(XF86AttributeRec) * NUM_ATTRIBUTES);
+	       sizeof(XvAttributeRec) * NUM_ATTRIBUTES);
 	att += NUM_ATTRIBUTES;
 	if (INTEL_INFO(intel)->gen >= 030) {
 		memcpy((char *)att, (char *)intel_xv_gamma_attributes,
-		       sizeof(XF86AttributeRec) * GAMMA_ATTRIBUTES);
+		       sizeof(XvAttributeRec) * GAMMA_ATTRIBUTES);
 	}
 	adapt->nImages = NUM_IMAGES - XVMC_IMAGE;
 

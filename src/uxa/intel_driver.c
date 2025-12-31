@@ -668,27 +668,6 @@ intel_dirty_update(intel_screen_private *intel)
 }
 #endif
 
-#if !HAVE_NOTIFY_FD
-static void
-I830BlockHandler(ScreenPtr screen, pointer timeout, pointer read_mask)
-{
-	ScrnInfoPtr scrn = xf86ScreenToScrn(screen);
-	intel_screen_private *intel = intel_get_screen_private(scrn);
-
-	screen->BlockHandler = intel->BlockHandler;
-
-	(*screen->BlockHandler) (scrn, timeout, read_mask);
-
-	intel->BlockHandler = screen->BlockHandler;
-	screen->BlockHandler = I830BlockHandler;
-
-	intel_uxa_block_handler(intel);
-	intel_video_block_handler(intel);
-#ifdef INTEL_PIXMAP_SHARING
-	intel_dirty_update(intel);
-#endif
-}
-#else
 static void
 I830BlockHandler(void *data, void *timeout)
 {
@@ -700,7 +679,6 @@ I830BlockHandler(void *data, void *timeout)
 	intel_dirty_update(intel);
 #endif
 }
-#endif
 
 static Bool
 intel_init_initial_framebuffer(ScrnInfoPtr scrn)
@@ -954,14 +932,9 @@ I830ScreenInit(ScreenPtr screen, int argc, char **argv)
 			   "Hardware cursor initialization failed\n");
 	}
 
-#if !HAVE_NOTIFY_FD
-	intel->BlockHandler = screen->BlockHandler;
-	screen->BlockHandler = I830BlockHandler;
-#else
 	RegisterBlockAndWakeupHandlers(I830BlockHandler,
 				       (ServerWakeupHandlerProcPtr)NoopDDA,
 				       intel);
-#endif
 
 #ifdef INTEL_PIXMAP_SHARING
 	screen->StartPixmapTracking = PixmapStartDirtyTracking;

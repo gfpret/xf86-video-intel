@@ -36,10 +36,6 @@
 
 #define xf86ScrnToScreen(s) ((s)->pScreen)
 
-#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) >= 22
-#define HAVE_NOTIFY_FD 1
-#endif
-
 static inline int
 region_num_rects(const RegionRec *r)
 {
@@ -134,11 +130,6 @@ region_get_boxes(const RegionRec *r, const BoxRec **s, const BoxRec **e)
 #define isGPU(S) (S)->is_gpu
 
 #define PixmapSyncDirtyHelper(d, dd) PixmapSyncDirtyHelper(d)
-
-#if !HAVE_NOTIFY_FD
-#define SetNotifyFd(fd, cb, mode, data) AddGeneralSocket(fd);
-#define RemoveNotifyFd(fd) RemoveGeneralSocket(fd)
-#endif
 
 #if ABI_VIDEODRV_VERSION >= SET_ABI_VERSION(25, 2)
 #define PixmapDirtyDst(d) ((d)->secondary_dst)

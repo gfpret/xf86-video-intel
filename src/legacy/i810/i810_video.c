@@ -74,11 +74,7 @@ static int I810PutImage( ScrnInfoPtr,
 static int I810QueryImageAttributes(ScrnInfoPtr, 
 	int, unsigned short *, unsigned short *,  int *, int *);
 
-#if !HAVE_NOTIFY_FD
-static void I810BlockHandler(ScreenPtr screen, pointer timeout, pointer read_mask);
-#else
 static void I810BlockHandler(void *data, void *_timeout);
-#endif
 
 #define MAKE_ATOM(a) MakeAtom(a, sizeof(a) - 1, TRUE)
 
@@ -419,14 +415,9 @@ I810SetupImageVideo(ScreenPtr screen)
 
     pI810->adaptor = adapt;
 
-#if !HAVE_NOTIFY_FD
-    pI810->BlockHandler = screen->BlockHandler;
-    screen->BlockHandler = I810BlockHandler;
-#else
     RegisterBlockAndWakeupHandlers(I810BlockHandler,
 				   (ServerWakeupHandlerProcPtr)NoopDDA,
 				   pScrn);
-#endif
 
     xvBrightness = MAKE_ATOM("XV_BRIGHTNESS");
     xvContrast   = MAKE_ATOM("XV_CONTRAST");
@@ -1142,44 +1133,6 @@ I810QueryImageAttributes(
     return size;
 }
 
-#if !HAVE_NOTIFY_FD
-static void
-I810BlockHandler (ScreenPtr screen, pointer timeout, pointer read_mask)
-{
-    ScrnInfoPtr pScrn = xf86ScreenToScrn(screen);
-    I810Ptr      pI810 = I810PTR(pScrn);
-    I810PortPrivPtr pPriv = GET_PORT_PRIVATE(pScrn);
-    I810OverlayRegPtr overlay = (I810OverlayRegPtr) (pI810->FbBase + pI810->OverlayStart); 
-
-    screen->BlockHandler = pI810->BlockHandler;
-    
-    (*screen->BlockHandler) (pScrn, timeout, read_mask);
-
-    screen->BlockHandler = I810BlockHandler;
-
-    if(pPriv->videoStatus & TIMER_MASK) {
-	UpdateCurrentTime();
-	if(pPriv->videoStatus & OFF_TIMER) {
-	    if(pPriv->offTime < currentTime.milliseconds) {
-		/* Turn off the overlay */
-		overlay->OV0CMD &= 0xFFFFFFFE;
-		OVERLAY_UPDATE(pI810->OverlayPhysical);
-
-		pPriv->videoStatus = FREE_TIMER;
-		pPriv->freeTime = currentTime.milliseconds + FREE_DELAY;
-	    }
-	} else {  /* FREE_TIMER */
-	    if(pPriv->freeTime < currentTime.milliseconds) {
-		if(pPriv->linear) {
-		   xf86FreeOffscreenLinear(pPriv->linear);
-		   pPriv->linear = NULL;
-		}
-		pPriv->videoStatus = 0;
-	    }
-        }
-    }
-}
-#else
 static void
 I810BlockHandler(void *data, void *_timeout)
 {
@@ -1210,8 +1163,6 @@ I810BlockHandler(void *data, void *_timeout)
         }
     }
 }
-#endif
-
 
 /***************************************************************************
  * Offscreen Images

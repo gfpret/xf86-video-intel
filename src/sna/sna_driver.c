@@ -700,45 +700,6 @@ static bool has_shadow(struct sna *sna)
 	return sna->mode.flip_active == 0;
 }
 
-#if !HAVE_NOTIFY_FD
-static void
-sna_block_handler(ScreenPtr arg, pointer timeout, pointer read_mask)
-{
-	struct sna *sna = to_sna_from_screen(arg);
-	struct timeval **tv = timeout;
-
-	DBG(("%s (tv=%ld.%06ld), has_shadow?=%d\n", __FUNCTION__,
-	     *tv ? (*tv)->tv_sec : -1, *tv ? (*tv)->tv_usec : 0,
-	     has_shadow(sna)));
-
-	sna->BlockHandler(arg, timeout, read_mask);
-
-	if (*tv == NULL || ((*tv)->tv_usec | (*tv)->tv_sec) || has_shadow(sna))
-		sna_accel_block(sna, tv);
-}
-
-static void
-sna_wakeup_handler(ScreenPtr arg, unsigned long result, pointer read_mask)
-{
-	struct sna *sna = to_sna_from_screen(arg);
-
-	DBG(("%s\n", __FUNCTION__));
-
-	/* despite all appearances, result is just a signed int */
-	if ((int)result < 0)
-		return;
-
-	sna_acpi_wakeup(sna, read_mask);
-
-	sna->WakeupHandler(arg, result, read_mask);
-
-	if (FD_ISSET(sna->kgem.fd, (fd_set*)read_mask)) {
-		sna_mode_wakeup(sna);
-		/* Clear the flag so that subsequent ZaphodHeads don't block  */
-		FD_CLR(sna->kgem.fd, (fd_set*)read_mask);
-	}
-}
-#else
 static void
 sna_block_handler(void *data, void *_timeout)
 {
@@ -768,7 +729,6 @@ sna_block_handler(void *data, void *_timeout)
 	if (tvp)
 		*timeout = tvp->tv_sec * 1000 + tvp->tv_usec / 1000;
 }
-#endif
 
 #if HAVE_UDEV
 #include <sys/stat.h>
@@ -964,11 +924,9 @@ static Bool sna_early_close_screen(ScreenPtr screen)
 
 	/* XXX Note that we will leak kernel resources if !vtSema */
 
-#if HAVE_NOTIFY_FD
 	RemoveBlockAndWakeupHandlers(sna_block_handler,
 				     (ServerWakeupHandlerProcPtr)NoopDDA,
 				     sna);
-#endif
 
 	sna_uevent_fini(sna);
 	sna_mode_close(sna);
@@ -1176,17 +1134,9 @@ sna_screen_init(ScreenPtr screen, int argc, char **argv)
 	 * later memory should be bound when allocating, e.g rotate_mem */
 	scrn->vtSema = TRUE;
 
-#if !HAVE_NOTIFY_FD
-	sna->BlockHandler = screen->BlockHandler;
-	screen->BlockHandler = sna_block_handler;
-
-	sna->WakeupHandler = screen->WakeupHandler;
-	screen->WakeupHandler = sna_wakeup_handler;
-#else
 	RegisterBlockAndWakeupHandlers(sna_block_handler,
 				       (ServerWakeupHandlerProcPtr)NoopDDA,
 				       sna);
-#endif
 
 	screen->SaveScreen = sna_save_screen;
 	screen->CreateScreenResources = sna_create_screen_resources;

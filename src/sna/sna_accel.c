@@ -18031,12 +18031,10 @@ static bool sna_option_accel_blt(struct sna *sna)
 	return strcasecmp(s, "blt") == 0;
 }
 
-#if HAVE_NOTIFY_FD
 static void sna_accel_notify(int fd, int ready, void *data)
 {
 	sna_mode_wakeup(data);
 }
-#endif
 
 bool sna_accel_init(ScreenPtr screen, struct sna *sna)
 {

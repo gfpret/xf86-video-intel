@@ -71,28 +71,6 @@ region_get_boxes(const RegionRec *r, const BoxRec **s, const BoxRec **e)
 	*e = *s + n;
 }
 
-#ifndef INCLUDE_LEGACY_REGION_DEFINES
-#define RegionCreate(r, s) REGION_CREATE(NULL, r, s)
-#define RegionBreak(r) REGION_BREAK(NULL, r)
-#define RegionSizeof REGION_SZOF
-#define RegionBoxptr REGION_BOXPTR
-#define RegionEnd REGION_END
-#define RegionExtents(r) REGION_EXTENTS(NULL, r)
-#define RegionContainsRect(r, b) RECT_IN_REGION(NULL, r, b)
-#define RegionContainsPoint(r, x, y, b) POINT_IN_REGION(NULL, r, x, y, b)
-#define RegionCopy(res, r) REGION_COPY(NULL, res, r)
-#define RegionIntersect(res, r1, r2) REGION_INTERSECT(NULL, res, r1, r2)
-#define RegionUnion(res, r1, r2) REGION_UNION(NULL, res, r1, r2)
-#define RegionSubtract(res, r1, r2) REGION_SUBTRACT(NULL, res, r1, r2)
-#define RegionTranslate(r, x, y) REGION_TRANSLATE(NULL, r, x, y)
-#define RegionUninit(r) REGION_UNINIT(NULL, r)
-#define RegionNil REGION_NIL
-#define RegionNull(r) REGION_NULL(NULL, r)
-#define RegionNotEmpty(r) REGION_NOTEMPTY(NULL, r)
-#define RegionEmpty(r) REGION_EMPTY(NULL, r)
-#define RegionEqual(a, b) REGION_EQUAL(NULL, a, b)
-#endif
-
 #define __get_private(p, key) dixGetPrivateAddr(&(p)->devPrivates, &(key))
 
 #if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(1,9,99,902,0)

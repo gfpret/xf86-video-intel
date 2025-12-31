@@ -438,10 +438,6 @@ void sna_video_textured_setup(struct sna *sna, ScreenPtr screen)
 		adaptor->nImages = ARRAY_SIZE(gen9_Images);
 		adaptor->pImages = (XvImageRec *)gen9_Images;
 	}
-#if XORG_XV_VERSION < 2
-	adaptor->ddAllocatePort = sna_xv_alloc_port;
-	adaptor->ddFreePort = sna_xv_free_port;
-#endif
 	adaptor->ddPutVideo = NULL;
 	adaptor->ddPutStill = NULL;
 	adaptor->ddGetVideo = NULL;

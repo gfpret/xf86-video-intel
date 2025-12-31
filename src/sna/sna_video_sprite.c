@@ -710,11 +710,7 @@ off:
 	return Success;
 
 err:
-#if XORG_XV_VERSION < 2
-	(void)sna_video_sprite_stop(client, port, draw);
-#else
 	(void)sna_video_sprite_stop(port, draw);
-#endif
 	return ret;
 }
 
@@ -876,10 +872,6 @@ void sna_video_sprite_setup(struct sna *sna, ScreenPtr screen)
 		adaptor->nImages = ARRAY_SIZE(images);
 	}
 
-#if XORG_XV_VERSION < 2
-	adaptor->ddAllocatePort = sna_xv_alloc_port;
-	adaptor->ddFreePort = sna_xv_free_port;
-#endif
 	adaptor->ddPutVideo = NULL;
 	adaptor->ddPutStill = NULL;
 	adaptor->ddGetVideo = NULL;

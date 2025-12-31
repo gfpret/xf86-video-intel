@@ -571,11 +571,7 @@ invisible:
 	/*
 	 * If the video isn't visible on any CRTC, turn it off
 	 */
-#if XORG_XV_VERSION < 2
-	sna_video_overlay_stop(client, port, draw);
-#else
 	sna_video_overlay_stop(port, draw);
-#endif
 	return Success;
 }
 
@@ -727,10 +723,6 @@ void sna_video_overlay_setup(struct sna *sna, ScreenPtr screen)
 	adaptor->pAttributes = (XvAttributeRec *)Attributes;
 	adaptor->nImages = ARRAY_SIZE(Images);
 	adaptor->pImages = (XvImageRec *)Images;
-#if XORG_XV_VERSION < 2
-	adaptor->ddAllocatePort = sna_xv_alloc_port;
-	adaptor->ddFreePort = sna_xv_free_port;
-#endif
 	adaptor->ddPutVideo = NULL;
 	adaptor->ddPutStill = NULL;
 	adaptor->ddGetVideo = NULL;

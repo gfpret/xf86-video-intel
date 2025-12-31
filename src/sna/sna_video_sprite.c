@@ -120,7 +120,7 @@ static void sna_video_sprite_hide(xf86CrtcPtr crtc, struct sna_video *video)
 	video->color_key_changed |= 1 << index;
 }
 
-static int sna_video_sprite_stop(ddStopVideo_ARGS)
+static int sna_video_sprite_stop(XvPortPtr port, DrawablePtr draw)
 {
 	struct sna_video *video = port->devPriv.ptr;
 	xf86CrtcConfigPtr config = XF86_CRTC_CONFIG_PTR(video->sna->scrn);

@@ -125,7 +125,7 @@ static bool sna_video_overlay_update_attrs(struct sna_video *video)
 	return drmIoctl(video->sna->kgem.fd, DRM_IOCTL_I915_OVERLAY_ATTRS, &attrs) == 0;
 }
 
-static int sna_video_overlay_stop(ddStopVideo_ARGS)
+static int sna_video_overlay_stop(XvPortPtr port, DrawablePtr draw)
 {
 	struct sna_video *video = port->devPriv.ptr;
 	struct sna *sna = video->sna;

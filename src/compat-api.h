@@ -97,12 +97,7 @@ region_get_boxes(const RegionRec *r, const BoxRec **s, const BoxRec **e)
 
 #define PixmapSyncDirtyHelper(d, dd) PixmapSyncDirtyHelper(d)
 
-#if ABI_VIDEODRV_VERSION >= SET_ABI_VERSION(25, 2)
 #define PixmapDirtyDst(d) ((d)->secondary_dst)
 #define PixmapDirtyPrimary(d) (PixmapDirtyDst(d)->primary_pixmap)
-#else
-#define PixmapDirtyDst(d) ((d)->slave_dst)
-#define PixmapDirtyPrimary(d) (PixmapDirtyDst(d)->master_pixmap)
-#endif
 
 #endif

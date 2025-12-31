@@ -144,7 +144,7 @@ static int sna_video_sprite_stop(XvPortPtr port, DrawablePtr draw)
 	return Success;
 }
 
-static int sna_video_sprite_set_attr(ddSetPortAttribute_ARGS)
+static int sna_video_sprite_set_attr(XvPortPtr port, Atom attribute, INT32 value)
 {
 	struct sna_video *video = port->devPriv.ptr;
 

@@ -70,8 +70,6 @@ region_get_boxes(const RegionRec *r, const BoxRec **s, const BoxRec **e)
 #define SourceValidate(d, x, y, w, h, mode) \
 	if ((d)->pScreen->SourceValidate) (d)->pScreen->SourceValidate(d, x, y, w, h, mode)
 
-#define DamageUnregister(d, dd) DamageUnregister(dd)
-
 #define XORG_XV_VERSION 2
 #define ddStopVideo_ARGS XvPortPtr port, DrawablePtr draw
 #define ddSetPortAttribute_ARGS XvPortPtr port, Atom attribute, INT32 value

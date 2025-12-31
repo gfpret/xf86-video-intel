@@ -17838,7 +17838,7 @@ migrate_dirty_tracking(PixmapPtr old_front, PixmapPtr new_front)
 			continue;
 #endif
 
-		DamageUnregister(&dirty->src->drawable, dirty->damage);
+		DamageUnregister(&dirty->src->drawable);
 		DamageDestroy(dirty->damage);
 
 		dirty->damage = DamageCreate(NULL, NULL,

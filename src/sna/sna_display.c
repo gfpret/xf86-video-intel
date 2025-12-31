@@ -1994,7 +1994,7 @@ static void sna_mode_disable_shadow(struct sna *sna)
 	if (priv->move_to_gpu == wait_for_shadow)
 		priv->move_to_gpu(sna, priv, 0);
 
-	DamageUnregister(&sna->front->drawable, sna->mode.shadow_damage);
+	DamageUnregister(&sna->front->drawable);
 	DamageDestroy(sna->mode.shadow_damage);
 	sna->mode.shadow_damage = NULL;
 	sna->mode.shadow_enabled = false;
@@ -2107,7 +2107,7 @@ static void sna_crtc_disable_shadow(struct sna *sna, struct sna_crtc *crtc)
 
 	if (crtc->slave_damage) {
 		assert(crtc->slave_pixmap);
-		DamageUnregister(&crtc->slave_pixmap->drawable, crtc->slave_damage);
+		DamageUnregister(&crtc->slave_pixmap->drawable);
 		DamageDestroy(crtc->slave_damage);
 		crtc->slave_damage = NULL;
 	}
